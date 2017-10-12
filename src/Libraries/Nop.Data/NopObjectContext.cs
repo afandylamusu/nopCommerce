@@ -35,7 +35,7 @@ namespace Nop.Data
             //var typesToRegister = Assembly.GetAssembly(configType).GetTypes()
 
             var typesToRegister = Assembly.GetExecutingAssembly().GetTypes()
-            .Where(type => !String.IsNullOrEmpty(type.Namespace))
+            .Where(type => !string.IsNullOrEmpty(type.Namespace))
             .Where(type => type.BaseType != null && type.BaseType.IsGenericType &&
                 type.BaseType.GetGenericTypeDefinition() == typeof(NopEntityTypeConfiguration<>));
             foreach (var type in typesToRegister)
@@ -108,7 +108,7 @@ namespace Nop.Data
             //add parameters to command
             if (parameters != null && parameters.Length > 0)
             {
-                for (int i = 0; i <= parameters.Length - 1; i++)
+                for (var i = 0; i <= parameters.Length - 1; i++)
                 {
                     var p = parameters[i] as DbParameter;
                     if (p == null)
@@ -127,13 +127,13 @@ namespace Nop.Data
 
             var result = this.Database.SqlQuery<TEntity>(commandText, parameters).ToList();
 
-            //performance hack applied as described here - http://www.nopcommerce.com/boards/t/25483/fix-very-important-speed-improvement.aspx
-            bool acd = this.Configuration.AutoDetectChangesEnabled;
+            //performance hack applied as described here - https://www.nopcommerce.com/boards/t/25483/fix-very-important-speed-improvement.aspx
+            var acd = this.Configuration.AutoDetectChangesEnabled;
             try
             {
                 this.Configuration.AutoDetectChangesEnabled = false;
 
-                for (int i = 0; i < result.Count; i++)
+                for (var i = 0; i < result.Count; i++)
                     result[i] = AttachEntityToContext(result[i]);
             }
             finally
@@ -196,7 +196,7 @@ namespace Nop.Data
         public void Detach(object entity)
         {
             if (entity == null)
-                throw new ArgumentNullException("entity");
+                throw new ArgumentNullException(nameof(entity));
 
             ((IObjectContextAdapter)this).ObjectContext.Detach(entity);
         }

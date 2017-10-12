@@ -7,7 +7,7 @@ namespace Nop.Services.Common
     /// <summary>
     /// Represents a task for keeping the site alive
     /// </summary>
-    public partial class KeepAliveTask : ITask
+    public partial class KeepAliveTask : IScheduleTask
     {
         private readonly IStoreContext _storeContext;
 
@@ -21,7 +21,7 @@ namespace Nop.Services.Common
         /// </summary>
         public void Execute()
         {
-            string url = _storeContext.CurrentStore.Url + "keepalive/index";
+            var url = _storeContext.CurrentStore.Url + "keepalive/index";
             using (var wc = new WebClient())
             {
                 wc.DownloadString(url);

@@ -55,7 +55,7 @@ namespace Nop.Services.Shipping
         public virtual void DeleteShipment(Shipment shipment)
         {
             if (shipment == null)
-                throw new ArgumentNullException("shipment");
+                throw new ArgumentNullException(nameof(shipment));
 
             _shipmentRepository.Delete(shipment);
 
@@ -88,13 +88,13 @@ namespace Nop.Services.Shipping
             int pageIndex = 0, int pageSize = int.MaxValue)
         {
             var query = _shipmentRepository.Table;
-            if (!String.IsNullOrEmpty(trackingNumber))
+            if (!string.IsNullOrEmpty(trackingNumber))
                 query = query.Where(s => s.TrackingNumber.Contains(trackingNumber));
             if (shippingCountryId > 0)
                 query = query.Where(s => s.Order.ShippingAddress.CountryId == shippingCountryId);
             if (shippingStateId > 0)
                 query = query.Where(s => s.Order.ShippingAddress.StateProvinceId == shippingStateId);
-            if (!String.IsNullOrWhiteSpace(shippingCity))
+            if (!string.IsNullOrWhiteSpace(shippingCity))
                 query = query.Where(s => s.Order.ShippingAddress.City.Contains(shippingCity));
             if (loadNotShipped)
                 query = query.Where(s => !s.ShippedDateUtc.HasValue);
@@ -141,7 +141,7 @@ namespace Nop.Services.Shipping
             var shipments = query.ToList();
             //sort by passed identifiers
             var sortedOrders = new List<Shipment>();
-            foreach (int id in shipmentIds)
+            foreach (var id in shipmentIds)
             {
                 var shipment = shipments.Find(x => x.Id == id);
                 if (shipment != null)
@@ -170,7 +170,7 @@ namespace Nop.Services.Shipping
         public virtual void InsertShipment(Shipment shipment)
         {
             if (shipment == null)
-                throw new ArgumentNullException("shipment");
+                throw new ArgumentNullException(nameof(shipment));
 
             _shipmentRepository.Insert(shipment);
 
@@ -185,7 +185,7 @@ namespace Nop.Services.Shipping
         public virtual void UpdateShipment(Shipment shipment)
         {
             if (shipment == null)
-                throw new ArgumentNullException("shipment");
+                throw new ArgumentNullException(nameof(shipment));
 
             _shipmentRepository.Update(shipment);
 
@@ -202,7 +202,7 @@ namespace Nop.Services.Shipping
         public virtual void DeleteShipmentItem(ShipmentItem shipmentItem)
         {
             if (shipmentItem == null)
-                throw new ArgumentNullException("shipmentItem");
+                throw new ArgumentNullException(nameof(shipmentItem));
 
             _siRepository.Delete(shipmentItem);
 
@@ -230,7 +230,7 @@ namespace Nop.Services.Shipping
         public virtual void InsertShipmentItem(ShipmentItem shipmentItem)
         {
             if (shipmentItem == null)
-                throw new ArgumentNullException("shipmentItem");
+                throw new ArgumentNullException(nameof(shipmentItem));
 
             _siRepository.Insert(shipmentItem);
 
@@ -245,7 +245,7 @@ namespace Nop.Services.Shipping
         public virtual void UpdateShipmentItem(ShipmentItem shipmentItem)
         {
             if (shipmentItem == null)
-                throw new ArgumentNullException("shipmentItem");
+                throw new ArgumentNullException(nameof(shipmentItem));
 
             _siRepository.Update(shipmentItem);
 
@@ -268,7 +268,7 @@ namespace Nop.Services.Shipping
             bool ignoreShipped, bool ignoreDelivered)
         {
             if (product == null)
-                throw new ArgumentNullException("product");
+                throw new ArgumentNullException(nameof(product));
 
             //only products with "use multiple warehouses" are handled this way
             if (product.ManageInventoryMethod != ManageInventoryMethod.ManageStock)

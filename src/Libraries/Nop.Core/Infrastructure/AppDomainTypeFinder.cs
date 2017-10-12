@@ -33,7 +33,7 @@ namespace Nop.Core.Infrastructure
             get { return AppDomain.CurrentDomain; }
         }
 
-        /// <summary>Gets or sets wether Nop should iterate assemblies in the app domain when loading Nop types. Loading patterns are applied when loading these assemblies.</summary>
+        /// <summary>Gets or sets whether Nop should iterate assemblies in the app domain when loading Nop types. Loading patterns are applied when loading these assemblies.</summary>
         public bool LoadAppDomainAssemblies
         {
             get { return loadAppDomainAssemblies; }
@@ -55,7 +55,7 @@ namespace Nop.Core.Infrastructure
         }
 
         /// <summary>Gets or sets the pattern for dll that will be investigated. For ease of use this defaults to match all but to increase performance you might want to configure a pattern that includes assemblies and your own.</summary>
-        /// <remarks>If you change this so that Nop assemblies arn't investigated (e.g. by not including something like "^Nop|..." you may break core functionality.</remarks>
+        /// <remarks>If you change this so that Nop assemblies aren't investigated (e.g. by not including something like "^Nop|..." you may break core functionality.</remarks>
         public string AssemblyRestrictToLoadingPattern
         {
             get { return assemblyRestrictToLoadingPattern; }
@@ -165,7 +165,7 @@ namespace Nop.Core.Infrastructure
         /// <param name="assemblies"></param>
         private void AddAssembliesInAppDomain(List<string> addedAssemblyNames, List<Assembly> assemblies)
         {
-            foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
+            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
             {
                 if (Matches(assembly.FullName))
                 {
@@ -179,15 +179,15 @@ namespace Nop.Core.Infrastructure
         }
 
         /// <summary>
-        /// Adds specificly configured assemblies.
+        /// Adds specifically configured assemblies.
         /// </summary>
         /// <param name="addedAssemblyNames"></param>
         /// <param name="assemblies"></param>
         protected virtual void AddConfiguredAssemblies(List<string> addedAssemblyNames, List<Assembly> assemblies)
         {
-            foreach (string assemblyName in AssemblyNames)
+            foreach (var assemblyName in AssemblyNames)
             {
-                Assembly assembly = Assembly.Load(assemblyName);
+                var assembly = Assembly.Load(assemblyName);
                 if (!addedAssemblyNames.Contains(assembly.FullName))
                 {
                     assemblies.Add(assembly);
@@ -237,7 +237,7 @@ namespace Nop.Core.Infrastructure
         protected virtual void LoadMatchingAssemblies(string directoryPath)
         {
             var loadedAssemblyNames = new List<string>();
-            foreach (Assembly a in GetAssemblies())
+            foreach (var a in GetAssemblies())
             {
                 loadedAssemblyNames.Add(a.FullName);
             }
@@ -247,7 +247,7 @@ namespace Nop.Core.Infrastructure
                 return;
             }
 
-            foreach (string dllPath in Directory.GetFiles(directoryPath, "*.dll"))
+            foreach (var dllPath in Directory.GetFiles(directoryPath, "*.dll"))
             {
                 try
                 {

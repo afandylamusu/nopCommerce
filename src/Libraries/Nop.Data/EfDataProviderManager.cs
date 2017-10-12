@@ -14,7 +14,7 @@ namespace Nop.Data
         {
 
             var providerName = Settings.DataProvider;
-            if (String.IsNullOrWhiteSpace(providerName))
+            if (string.IsNullOrWhiteSpace(providerName))
                 throw new NopException("Data Settings doesn't contain a providerName");
 
             switch (providerName.ToLowerInvariant())
@@ -24,7 +24,7 @@ namespace Nop.Data
                 case "sqlce":
                     return new SqlCeDataProvider();
                 default:
-                    throw new NopException(string.Format("Not supported dataprovider name: {0}", providerName));
+                    throw new NopException($"Not supported dataprovider name: {providerName}");
             }
         }
 

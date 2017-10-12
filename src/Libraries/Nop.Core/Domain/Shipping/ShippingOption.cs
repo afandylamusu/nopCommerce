@@ -53,7 +53,7 @@ namespace Nop.Core.Domain.Shipping
             {
                 ShippingOption shippingOption = null;
                 var valueStr = value as string;
-                if (!String.IsNullOrEmpty(valueStr))
+                if (!string.IsNullOrEmpty(valueStr))
                 {
                     try
                     {
@@ -65,7 +65,7 @@ namespace Nop.Core.Domain.Shipping
                     }
                     catch
                     {
-                        //xml error
+                        //XML error
                     }
                 }
                 return shippingOption;
@@ -85,7 +85,7 @@ namespace Nop.Core.Domain.Shipping
                     {
                         var xmlS = new XmlSerializer(typeof(ShippingOption));
                         xmlS.Serialize(tw, value);
-                        string serialized = sb.ToString();
+                        var serialized = sb.ToString();
                         return serialized;
                     }
                 }
@@ -116,7 +116,7 @@ namespace Nop.Core.Domain.Shipping
             {
                 List<ShippingOption> shippingOptions = null;
                 var valueStr = value as string;
-                if (!String.IsNullOrEmpty(valueStr))
+                if (!string.IsNullOrEmpty(valueStr))
                 {
                     try
                     {
@@ -128,7 +128,7 @@ namespace Nop.Core.Domain.Shipping
                     }
                     catch
                     {
-                        //xml error
+                        //XML error
                     }
                 }
                 return shippingOptions;
@@ -148,7 +148,7 @@ namespace Nop.Core.Domain.Shipping
                     {
                         var xmlS = new XmlSerializer(typeof(List<ShippingOption>));
                         xmlS.Serialize(tw, value);
-                        string serialized = sb.ToString();
+                        var serialized = sb.ToString();
                         return serialized;
                     }
                 }

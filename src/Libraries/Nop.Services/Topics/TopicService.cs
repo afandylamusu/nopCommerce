@@ -89,7 +89,7 @@ namespace Nop.Services.Topics
         public virtual void DeleteTopic(Topic topic)
         {
             if (topic == null)
-                throw new ArgumentNullException("topic");
+                throw new ArgumentNullException(nameof(topic));
 
             _topicRepository.Delete(topic);
 
@@ -110,7 +110,7 @@ namespace Nop.Services.Topics
             if (topicId == 0)
                 return null;
 
-            string key = string.Format(TOPICS_BY_ID_KEY, topicId);
+            var key = string.Format(TOPICS_BY_ID_KEY, topicId);
             return _cacheManager.Get(key, () => _topicRepository.GetById(topicId));
         }
 
@@ -122,7 +122,7 @@ namespace Nop.Services.Topics
         /// <returns>Topic</returns>
         public virtual Topic GetTopicBySystemName(string systemName, int storeId = 0)
         {
-            if (String.IsNullOrEmpty(systemName))
+            if (string.IsNullOrEmpty(systemName))
                 return null;
 
             var query = _topicRepository.Table;
@@ -145,7 +145,7 @@ namespace Nop.Services.Topics
         /// <returns>Topics</returns>
         public virtual IList<Topic> GetAllTopics(int storeId, bool ignorAcl = false, bool showHidden = false)
         {
-            string key = string.Format(TOPICS_ALL_KEY, storeId, ignorAcl, showHidden);
+            var key = string.Format(TOPICS_ALL_KEY, storeId, ignorAcl, showHidden);
             return _cacheManager.Get(key, () =>
             {
                 var query = _topicRepository.Table;
@@ -199,7 +199,7 @@ namespace Nop.Services.Topics
         public virtual void InsertTopic(Topic topic)
         {
             if (topic == null)
-                throw new ArgumentNullException("topic");
+                throw new ArgumentNullException(nameof(topic));
 
             _topicRepository.Insert(topic);
 
@@ -217,7 +217,7 @@ namespace Nop.Services.Topics
         public virtual void UpdateTopic(Topic topic)
         {
             if (topic == null)
-                throw new ArgumentNullException("topic");
+                throw new ArgumentNullException(nameof(topic));
 
             _topicRepository.Update(topic);
 

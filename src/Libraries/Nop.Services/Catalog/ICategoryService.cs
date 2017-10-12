@@ -116,11 +116,11 @@ namespace Nop.Services.Catalog
         void UpdateProductCategory(ProductCategory productCategory);
 
         /// <summary>
-        /// Returns a list of IDs of not existing categories
+        /// Returns a list of names of not existing categories
         /// </summary>
-        /// <param name="categoryIds">The IDs of the categories to check</param>
-        /// <returns>List of IDs not existing categories</returns>
-        int[] GetNotExistingCategories(int[] categoryIds);
+        /// <param name="categoryNames">The nemes of the categories to check</param>
+        /// <returns>List of names not existing categories</returns>
+        string[] GetNotExistingCategories(string[] categoryNames);
 
         /// <summary>
         /// Get category IDs for products
@@ -128,5 +128,12 @@ namespace Nop.Services.Catalog
         /// <param name="productIds">Products IDs</param>
         /// <returns>Category IDs for products</returns>
         IDictionary<int, int[]> GetProductCategoryIds(int[] productIds);
+
+        /// <summary>
+        /// Gets categories by identifier
+        /// </summary>
+        /// <param name="categoryIds">Category identifiers</param>
+        /// <returns>Categories</returns>
+        List<Category> GetCategoriesByIds(int [] categoryIds);
     }
 }

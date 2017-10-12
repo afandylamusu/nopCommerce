@@ -90,7 +90,7 @@ namespace Nop.Services.Customers
         public virtual void DeleteCustomerAttribute(CustomerAttribute customerAttribute)
         {
             if (customerAttribute == null)
-                throw new ArgumentNullException("customerAttribute");
+                throw new ArgumentNullException(nameof(customerAttribute));
 
             _customerAttributeRepository.Delete(customerAttribute);
 
@@ -107,11 +107,11 @@ namespace Nop.Services.Customers
         /// <returns>Customer attributes</returns>
         public virtual IList<CustomerAttribute> GetAllCustomerAttributes()
         {
-            string key = CUSTOMERATTRIBUTES_ALL_KEY;
+            var key = CUSTOMERATTRIBUTES_ALL_KEY;
             return _cacheManager.Get(key, () =>
             {
                 var query = from ca in _customerAttributeRepository.Table
-                            orderby ca.DisplayOrder
+                            orderby ca.DisplayOrder, ca.Id
                             select ca;
                 return query.ToList();
             });
@@ -127,7 +127,7 @@ namespace Nop.Services.Customers
             if (customerAttributeId == 0)
                 return null;
 
-            string key = string.Format(CUSTOMERATTRIBUTES_BY_ID_KEY, customerAttributeId);
+            var key = string.Format(CUSTOMERATTRIBUTES_BY_ID_KEY, customerAttributeId);
             return _cacheManager.Get(key, () => _customerAttributeRepository.GetById(customerAttributeId));
         }
 
@@ -138,7 +138,7 @@ namespace Nop.Services.Customers
         public virtual void InsertCustomerAttribute(CustomerAttribute customerAttribute)
         {
             if (customerAttribute == null)
-                throw new ArgumentNullException("customerAttribute");
+                throw new ArgumentNullException(nameof(customerAttribute));
 
             _customerAttributeRepository.Insert(customerAttribute);
 
@@ -156,7 +156,7 @@ namespace Nop.Services.Customers
         public virtual void UpdateCustomerAttribute(CustomerAttribute customerAttribute)
         {
             if (customerAttribute == null)
-                throw new ArgumentNullException("customerAttribute");
+                throw new ArgumentNullException(nameof(customerAttribute));
 
             _customerAttributeRepository.Update(customerAttribute);
 
@@ -174,7 +174,7 @@ namespace Nop.Services.Customers
         public virtual void DeleteCustomerAttributeValue(CustomerAttributeValue customerAttributeValue)
         {
             if (customerAttributeValue == null)
-                throw new ArgumentNullException("customerAttributeValue");
+                throw new ArgumentNullException(nameof(customerAttributeValue));
 
             _customerAttributeValueRepository.Delete(customerAttributeValue);
 
@@ -192,11 +192,11 @@ namespace Nop.Services.Customers
         /// <returns>Customer attribute values</returns>
         public virtual IList<CustomerAttributeValue> GetCustomerAttributeValues(int customerAttributeId)
         {
-            string key = string.Format(CUSTOMERATTRIBUTEVALUES_ALL_KEY, customerAttributeId);
+            var key = string.Format(CUSTOMERATTRIBUTEVALUES_ALL_KEY, customerAttributeId);
             return _cacheManager.Get(key, () =>
             {
                 var query = from cav in _customerAttributeValueRepository.Table
-                            orderby cav.DisplayOrder
+                            orderby cav.DisplayOrder, cav.Id
                             where cav.CustomerAttributeId == customerAttributeId
                             select cav;
                 var customerAttributeValues = query.ToList();
@@ -214,7 +214,7 @@ namespace Nop.Services.Customers
             if (customerAttributeValueId == 0)
                 return null;
 
-            string key = string.Format(CUSTOMERATTRIBUTEVALUES_BY_ID_KEY, customerAttributeValueId);
+            var key = string.Format(CUSTOMERATTRIBUTEVALUES_BY_ID_KEY, customerAttributeValueId);
             return _cacheManager.Get(key, () => _customerAttributeValueRepository.GetById(customerAttributeValueId));
         }
 
@@ -225,7 +225,7 @@ namespace Nop.Services.Customers
         public virtual void InsertCustomerAttributeValue(CustomerAttributeValue customerAttributeValue)
         {
             if (customerAttributeValue == null)
-                throw new ArgumentNullException("customerAttributeValue");
+                throw new ArgumentNullException(nameof(customerAttributeValue));
 
             _customerAttributeValueRepository.Insert(customerAttributeValue);
 
@@ -243,7 +243,7 @@ namespace Nop.Services.Customers
         public virtual void UpdateCustomerAttributeValue(CustomerAttributeValue customerAttributeValue)
         {
             if (customerAttributeValue == null)
-                throw new ArgumentNullException("customerAttributeValue");
+                throw new ArgumentNullException(nameof(customerAttributeValue));
 
             _customerAttributeValueRepository.Update(customerAttributeValue);
 

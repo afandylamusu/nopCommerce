@@ -21,7 +21,7 @@ namespace Nop.Data.Initializers
             if (context.Database.Connection is SqlCeConnection)
             {
                 var builder = new SqlCeConnectionStringBuilder(context.Database.Connection.ConnectionString);
-                if (!String.IsNullOrWhiteSpace(builder.DataSource))
+                if (!string.IsNullOrWhiteSpace(builder.DataSource))
                 {
                     builder.DataSource = ReplaceDataDirectory(builder.DataSource);
                     return new DbContext(builder.ConnectionString);
@@ -32,7 +32,9 @@ namespace Nop.Data.Initializers
 
         private static string ReplaceDataDirectory(string inputString)
         {
-            string str = inputString.Trim();
+            string str = null;
+            if (inputString != null)
+                str = inputString.Trim();
             if (string.IsNullOrEmpty(inputString) || !inputString.StartsWith("|DataDirectory|", StringComparison.InvariantCultureIgnoreCase))
             {
                 return str;
@@ -46,7 +48,7 @@ namespace Nop.Data.Initializers
             {
                 data = string.Empty;
             }
-            int length = "|DataDirectory|".Length;
+            var length = "|DataDirectory|".Length;
             if ((inputString.Length > "|DataDirectory|".Length) && ('\\' == inputString["|DataDirectory|".Length]))
             {
                 length++;

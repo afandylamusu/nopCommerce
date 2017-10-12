@@ -17,16 +17,14 @@ namespace Nop.Services.Directory
         #region Fields
 
         private readonly ILogger _logger;
-        private readonly IWebHelper _webHelper;
 
         #endregion
 
         #region Ctor
 
-        public GeoLookupService(ILogger logger, IWebHelper webHelper)
+        public GeoLookupService(ILogger logger)
         {
             this._logger = logger;
-            this._webHelper = webHelper;
         }
 
         #endregion
@@ -35,13 +33,13 @@ namespace Nop.Services.Directory
 
         protected virtual CountryResponse GetInformation(string ipAddress)
         {
-            if (String.IsNullOrEmpty(ipAddress))
+            if (string.IsNullOrEmpty(ipAddress))
                 return null;
 
             try
             {
                 //This product includes GeoLite2 data created by MaxMind, available from http://www.maxmind.com
-                var databasePath = _webHelper.MapPath("~/App_Data/GeoLite2-Country.mmdb");
+                var databasePath = CommonHelper.MapPath("~/App_Data/GeoLite2-Country.mmdb");
                 var reader = new DatabaseReader(databasePath);
                 var omni = reader.Country(ipAddress);
                 return omni;
